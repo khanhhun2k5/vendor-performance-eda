@@ -1,0 +1,7 @@
+table_name,n_rows,n_columns,n_null_cells,null_cell_pct,n_cols_untrimmed
+sales,12825363,14,0,0.0,1
+purchases,2372474,16,3,7.90314245804169e-06,1
+end_inventory,224489,9,1284,0.06355174047132228,0
+begin_inventory,206529,9,0,0.0,0
+purchase_prices,12261,9,3,0.0027186472011527063,1
+vendor_invoice,5543,10,5169,9.325275121775212,1

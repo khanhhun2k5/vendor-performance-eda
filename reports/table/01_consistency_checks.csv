@@ -1,0 +1,40 @@
+check_group,check_name,tables,n_affected,n_total,affected_pct,severity,note
+Hóa đơn,Số PO trên hóa đơn không khớp PO thật (đã ghép lại theo NCC+SL+tiền),vendor_invoice vs purchases,1336,5543,24.10247158578387,Lỗi,Từ PO 12311 (PODate ≥ 25/09/2024); PODate hóa đơn lệch ±5 ngày
+Giá,Giá bán (sales) khác giá niêm yết danh mục,sales vs purchase_prices,5950335,12825363,46.39506109885545,Cảnh báo,Giá bán thay đổi theo thời gian/cửa hàng; danh mục là giá tham chiếu — tính doanh thu từ SalesDollars
+Giá,Giá tồn đầu kỳ khác giá niêm yết danh mục,begin_inventory vs purchase_prices,88356,206529,42.781401159159245,Cảnh báo,Giá thời điểm 01/01
+Giá,Giá tồn cuối kỳ khác giá niêm yết danh mục,end_inventory vs purchase_prices,112525,224489,50.124950443006114,Cảnh báo,Giá thời điểm 31/12
+Hóa đơn,Ngày hóa đơn / ngày trả trên hóa đơn ≠ ngày ghi trên dòng mua,vendor_invoice vs purchases,1403,5543,25.311203319502074,Cảnh báo,pay_days dùng ngày trên hóa đơn
+Hóa đơn,PO giao nhiều đợt (≥ 2 ngày nhận) — không phải dòng trùng,purchases,5000,5543,90.20386072523904,Cảnh báo,"Giải thích các cặp (PONumber, InventoryId) lặp lại"
+Khóa & liên kết,InventoryId có giao dịch nhưng không có trong ảnh chụp tồn kho đầu/cuối kỳ,"sales, purchases vs inventory",20347,276389,7.361725683728368,Cảnh báo,Mua vào và bán hết trong năm (tồn = 0 ở cả 2 mốc) — cân đối vẫn khớp
+Ngày tháng,"Ngày chứng từ ngoài 2024 (PODate 2023, Invoice/PayDate 2025)","purchases, vendor_invoice",448602,7134051,6.2881804461448345,Cảnh báo,Hợp lệ: đơn vắt qua đầu/cuối kỳ
+Ngày tháng,"Ngày trong năm KHÔNG có dữ liệu bán: 2024-03-27, 2024-11-24",sales,2,366,0.546448087431694,Cảnh báo,Năm nhuận 366 ngày; ngày thiếu làm giảm doanh thu tháng tương ứng
+Ngày tháng,"Ngày trong năm KHÔNG có nhận hàng: 2024-03-27, 2024-12-25",purchases,2,366,0.546448087431694,Cảnh báo,Nhận hàng diễn ra cả cuối tuần
+Nhà cung cấp,Brand bán/mua dưới VendorNumber khác danh mục,sales / purchases vs purchase_prices,91,21901,0.415506141272088,Cảnh báo,"Số Brand; KPI NCC tính theo NCC thực giao dịch, không theo danh mục"
+Nhà cung cấp,1 VendorNumber có > 1 tên: 1587 = VINEYARD BRANDS INC / VINEYARD BRANDS LLC; 2000 = SOUTHERN GLAZERS W&S OF NE / SOUTHERN WINE & SPIRITS NE,"purchase_prices, purchases, vendor_invoice",2,132,1.5151515151515151,Cảnh báo,Đổi tên/sáp nhập — gộp theo mã
+Thuộc tính sản phẩm,Size viết khác danh mục nhưng CÙNG dung tích (vd 1.5L vs 1500mL),purchases vs purchase_prices,1377,10664,12.912603150787698,Cảnh báo,Chỉ khác cách viết — dùng Volume khi cần số
+Thuộc tính sản phẩm,Size KHÁC dung tích danh mục (vd 250mL 4 Pk vs 1000mL),purchases vs purchase_prices,33,10664,0.3094523630907727,Cảnh báo,"Đa phần là gói nhiều chai: danh mục ghi tổng, giao dịch ghi theo chai"
+Thuộc tính sản phẩm,Size viết khác danh mục,end_inventory vs purchase_prices,44123,224489,19.654860594505745,Cảnh báo,Số dòng tồn kho; chủ yếu L ↔ mL
+Thuộc tính sản phẩm,1 Brand có > 1 Size trong sales,sales,5,11237,0.04449586188484471,Cảnh báo,
+Thuộc tính sản phẩm,Description khác danh mục,begin_inventory vs purchase_prices,2755,206529,1.3339531010172905,Cảnh báo,"Vd ""Glass Pack"" ↔ ""VAP""; dùng Brand làm khóa, không dùng tên"
+Giá,Giá mua (purchases) khác giá mua danh mục,purchases vs purchase_prices,0,2372474,0.0,Đạt,Số dòng
+Hóa đơn,Ngày/NCC thống nhất giữa các dòng của cùng 1 PO trong purchases,purchases,0,5543,0.0,Đạt,
+Khóa & liên kết,"Khóa chính bị trùng (InventoryId tồn kho, Brand danh mục, PONumber hóa đơn)","begin/end_inventory, purchase_prices, vendor_invoice",0,448822,0.0,Đạt,
+Khóa & liên kết,Brand trong giao dịch/tồn kho không có trong danh mục purchase_prices,"sales, purchases, begin/end_inventory",0,32660,0.0,Đạt,Số Brand
+Khóa & liên kết,InventoryId không theo mẫu Store_City_Brand khớp cột Store/Brand,"sales, purchases",0,15197837,0.0,Đạt,Số dòng
+Khóa & liên kết,Store gắn với > 1 City,begin/end_inventory,0,80,0.0,Đạt,
+Ngày tháng,Ngày sai định dạng YYYY-MM-DD / không tồn tại,mọi cột *Date,0,22762906,0.0,Đạt,Kiểm bằng date(v) = v (bắt cả 2024-02-30)
+Ngày tháng,Ngày giao dịch (SalesDate/ReceivingDate) ngoài năm 2024,"sales, purchases",0,15197837,0.0,Đạt,Phạm vi kỳ phân tích
+Ngày tháng,startDate/endDate không phải hằng số 2024-01-01 / 2024-12-31,begin/end_inventory,0,2,0.0,Đạt,Ảnh chụp tồn kho
+Ngày tháng,"Thứ tự ngày sai trong purchases (nhận < đặt, hóa đơn < đặt, trả < hóa đơn)",purchases,0,2372474,0.0,Đạt,
+Ngày tháng,"Thứ tự ngày sai trong vendor_invoice (hóa đơn < đặt, trả < hóa đơn)",vendor_invoice,0,5543,0.0,Đạt,
+Ngày tháng,Hóa đơn xuất trước khi nhận đủ hàng (InvoiceDate < ngày nhận cuối),mart_po,0,5543,0.0,Đạt,Có thể là hóa đơn theo đợt giao đầu
+Nhà cung cấp,1 tên NCC dùng > 1 VendorNumber,"purchase_prices, vendor_invoice",0,134,0.0,Đạt,
+Số học,Thành tiền ≠ đơn giá × số lượng,"sales, purchases",0,15197837,0.0,Đạt,"Ngưỡng $0,01"
+Số học,Số lượng ≤ 0,"sales, purchases",0,15197837,0.0,Đạt,
+Số học,"Thuế tiêu thụ/lít ngoài khoảng của nhóm (rượu mạnh 0,9–1,2; vang 0,1–0,25 USD/L)",sales,0,12825363,0.0,Đạt,ExciseTax ≈ mức thuế/lít × dung tích × số lượng
+Thuộc tính sản phẩm,Description khác danh mục,sales / purchases vs purchase_prices,0,21901,0.0,Đạt,Số Brand
+Thuộc tính sản phẩm,Classification khác danh mục,sales / purchases vs purchase_prices,0,21901,0.0,Đạt,Số Brand
+Thuộc tính sản phẩm,Volume trong sales khác Volume danh mục,sales vs purchase_prices,0,11237,0.0,Đạt,Số Brand
+Tồn kho,Cân đối lệch: đầu kỳ + mua − bán ≠ cuối kỳ,"begin/end_inventory, purchases, sales",0,276389,0.0,Đạt,Tổng lệch (chai) = 0
+Tồn kho,Bán vượt lượng sẵn có (đầu kỳ + mua < bán),mart_stock_flow,0,276389,0.0,Đạt,
+Tồn kho,onHand âm,begin/end_inventory,0,512084,0.0,Đạt,

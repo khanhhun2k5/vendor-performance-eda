@@ -1,0 +1,25 @@
+check_id,check_name,table_name,n_affected,n_total,affected_pct,action
+1,1 mã NCC có nhiều cách viết tên,dim_vendor,2,132,1.5151515151515151,Lấy 1 tên chuẩn theo VendorNumber
+1,VendorName có khoảng trắng thừa,purchase_prices,10407,12261,84.87888426718865,TRIM()
+1,VendorName có khoảng trắng thừa,vendor_invoice,5133,5543,92.6032834205304,TRIM()
+4,Volume không phải số (Unknown/NULL),purchase_prices,5,12261,0.0407797080172906,"Ép kiểu số, lỗi → NULL"
+5,City bị thiếu,end_inventory,1284,224489,0.5719656642419005,Điền theo Store từ begin_inventory
+6,Price = 0 (danh mục),purchase_prices,2,12261,0.016311883206916237,Gắn cờ
+6,PurchasePrice = 0,purchases,153,2372474,0.006448964245762019,Gắn cờ / loại khi tính giá vốn
+6,SalesPrice = 0,sales,55,12825363,0.0004288377646698967,Gắn cờ / loại khi tính giá bán
+7,Approval rỗng,vendor_invoice,5169,5543,93.25275121775212,"Coi là “chưa ghi nhận”, không impute"
+8,Sau ghép: SL/tiền hóa đơn ≠ tổng dòng mua,mart_po,0,5543,0.0,Kỳ vọng = 0
+8,Sau ghép: InvoiceDate hóa đơn ≠ InvoiceDate trên dòng mua,mart_po,1273,5543,22.965902940645858,pay_days tính theo ngày trên hóa đơn
+8,Sau ghép: PayDate hóa đơn ≠ PayDate trên dòng mua,mart_po,1339,5543,24.156593902219015,pay_days tính theo ngày trên hóa đơn
+8,Số PO trên hóa đơn bị xáo trộn (ghép lại theo NCC+SL+tiền),vendor_invoice,1336,5543,24.10247158578387,"Nối hóa đơn qua map_invoice_po, không theo PONumber"
+8,Hóa đơn không ghép được với PO nào,vendor_invoice,0,5543,0.0,Kỳ vọng = 0
+9,[Tham chiếu] ProfitMargin = −inf trong vendor_sales_summary,vendor_sales_summary,178,10692,1.6647961092405537,Chỉ đối chiếu — mart tự tính dùng NULL
+10,GrossProfit < 0 (lỗ gộp),mart_vendor_brand,2127,11450,18.5764192139738,Không phải lỗi — phân tích riêng
+10,Sản phẩm đã mua nhưng không bán được,mart_vendor_brand,178,11450,1.554585152838428,Ứng viên hàng tồn chậm
+13,PODate trước 2024,purchases (PO),169,5543,3.0488904925130798,Hợp lệ (đơn vắt kỳ)
+13,PayDate sang 2025,vendor_invoice,677,5543,12.213602742197367,Hợp lệ (đơn vắt kỳ)
+14,[Kiểm chứng] Cặp có mua trong mart nhưng thiếu trong vendor_sales_summary,mart_vendor_brand,1,10693,0.009351912466099318,Giải thích từng dòng
+14,[Kiểm chứng] Phí vận chuyển theo NCC lệch FreightCost của vendor_sales_summary,mart_vendor_po,0,126,0.0,Kỳ vọng = 0
+14,"[Kiểm chứng] mart_vendor_brand lệch vendor_sales_summary (doanh thu > $0,01)",vss_clean,0,10692,0.0,Kỳ vọng = 0
+14,[Kiểm chứng] Cặp trong vendor_sales_summary nhưng thiếu trong mart,vss_clean,0,10692,0.0,Kỳ vọng = 0
+15,"Cặp (Brand, NCC) có bán nhưng không có dòng mua trong kỳ",mart_vendor_brand,757,11450,6.611353711790393,Giữ lại (FULL JOIN) — bán từ tồn đầu kỳ

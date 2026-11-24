@@ -1,0 +1,9 @@
+# Phiên bản đã kiểm chứng (Python 3.13). sqlite3 có sẵn trong Python, cần SQLite >= 3.39 (FULL OUTER JOIN).
+numpy>=2.4
+pandas>=3.0
+matplotlib>=3.11
+jinja2>=3.1        # DataFrame.style trong notebook
+ipykernel>=7.3
+nbformat>=5.10
+nbconvert>=7.17    # chạy notebook từ dòng lệnh
+pytest>=8          # tests/
